@@ -1,0 +1,115 @@
+<div class="container">
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <form novalidate (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName" class="form-control" [(ngModel)]="client.fullName" name="fullName" #fullName="ngModel" [ngClass]="{ 'is-invalid': fullName.invalid && form.submitted }"
+            required minlength="2">
+          <div class="invalid-feedback" [hidden]="!fullName.errors?.required">
+            Full name can not be empty
+          </div>
+          <div class="invalid-feedback" [hidden]="!fullName.errors?.minlength">
+            Full name should consist more than 2 symbol
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="text" id="email" class="form-control" [(ngModel)]="client.email" name="email" #email="ngModel" [ngClass]="{ 'is-invalid': email.invalid && form.submitted }"
+            required email>
+          <div class="invalid-feedback" [hidden]="!email.errors?.required">
+            E-mail can not be empty
+          </div>
+          <div class="invalid-feedback" [hidden]="!email.errors?.email">
+            Please provide a valid e-mail
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" class="form-control" [(ngModel)]="client.age" name="age" #age="ngModel" [ngClass]="{ 'is-invalid': age.invalid && form.submitted }"
+            required pattern="[0-9]{1,2}">
+          <div class="invalid-feedback" [hidden]="!age.errors?.required">
+            Age can not be empty
+          </div>
+          <div class="invalid-feedback" [hidden]="!age.errors?.pattern">
+            Please provide a valid age
+          </div>
+        </div>
+        <div class="form-group">
+          <span data-toggle="tooltip" title="Phone number should consist 10 numbers only !">
+            <label for="phoneNumber">Phone number</label>
+            <input 
+              type="text" 
+              id="phoneNumber" 
+              class="form-control" 
+              [(ngModel)]="client.phoneNumber" 
+              name="phoneNumber" 
+              #phoneNumber="ngModel"
+              [ngClass]="{ 'is-invalid': phoneNumber.invalid && form.submitted }" 
+              required 
+              pattern="[0-9]{10}"
+            >
+          </span>
+          <div class="invalid-feedback" [hidden]="!phoneNumber.errors?.required">
+            Phone number can not be empty
+          </div>
+          <div class="invalid-feedback" [hidden]="!phoneNumber.errors?.pattern">
+            Please provide a valid phone number
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment</label>
+          <textarea id="comment" class="form-control" [(ngModel)]="client.comment" name="comment" #comment="ngModel" [ngClass]="{ 'is-invalid': comment.invalid && form.submitted }"
+            required>
+            </textarea>
+          <div class="invalid-feedback">
+            Comment can not be empty
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-center" scope="col">№</th>
+        <th class="text-center" scope="col">Full name</th>
+        <th class="text-center" scope="col">E-mail</th>
+        <th class="text-center" scope="col">Age</th>
+        <th class="text-center" scope="col">Phone number</th>
+        <th class="text-center" scope="col">Comment</th>
+        <th class="text-center" scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clientList; let i = index">
+        <td class="text-center">
+          {{ i+1 }}
+        </td>
+        <td class="text-center">
+          {{ client.fullName }}
+        </td>
+        <td class="text-center">
+          {{ client.email }}
+        </td>
+        <td class="text-center">
+          {{ client.age }}
+        </td>
+        <td class="text-center">
+          {{ client.phoneNumber }}
+        </td>
+        <td class="text-center">
+          {{ client.comment }}
+        </td>
+        <td class="text-center">
+          <button class="btn btn-light m-0" (click)="deleteClient(i)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
